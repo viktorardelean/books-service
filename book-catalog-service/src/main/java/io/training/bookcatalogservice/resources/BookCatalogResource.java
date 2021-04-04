@@ -24,13 +24,13 @@ public class BookCatalogResource {
     @RequestMapping("/{userId}")
     public List<CatalogItem> getCatalog(@PathVariable String userId) {
 
-        UserBookRating userBookRating = restTemplate.getForObject("http://localhost:8083/rating/users/" + userId,
+        UserBookRating userBookRating = restTemplate.getForObject("http://book-rating-service/rating/users/" + userId,
                 UserBookRating.class);
 
 
 
         return userBookRating.getUserBookRatings().stream().map( rating -> {
-            Book book = restTemplate.getForObject("http://localhost:8082/books/" + rating.getBookId(), Book.class);
+            Book book = restTemplate.getForObject("http://book-info-service/books/" + rating.getBookId(), Book.class);
             return new CatalogItem(
                 book.getTitle(),
                 "From a renowned historian comes a groundbreaking narrative of humanity’s creation and evoluti" +
